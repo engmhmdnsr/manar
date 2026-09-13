@@ -1,0 +1,484 @@
+﻿<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Virtual Showroom &amp; 3D Product Tour | Manar Al Omran (MAO)</title><meta name="description" content="Explore Manar Al Omran's interactive virtual showroom. Inspect 3D formwork assemblies, heavy scaffolding, bridge tables, and engineering solutions anytime, anywhere."><link rel="canonical" href="https://manar.com.sa/virtual-tour.html"><meta property="og:type" content="website"><meta property="og:url" content="https://manar.com.sa/virtual-tour.html"><meta property="og:title" content="Virtual Showroom & 3D Product Tour | Manar Al Omran"><meta property="og:description" content="An innovative virtual showroom that allows you to explore our products and services anytime, anywhere. Experience 3D formwork assemblies and scaffolding models directly in your browser."><meta property="og:image" content="assets/img/hero1.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Virtual Showroom & 3D Product Tour | Manar Al Omran"><meta name="twitter:description" content="An innovative virtual showroom that allows you to explore our products and services anytime, anywhere. Experience 3D formwork assemblies and scaffolding models directly in your browser."><meta property="twitter:image" content="assets/img/hero1.webp"><link rel="icon" href="assets/favicon.ico" type="image/x-icon"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"><style>
+        .tour-hero-meta-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            align-items: center;
+        }
+        .tour-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-surface);
+            color: var(--text-white);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--border-color);
+            font-family: var(--font-mono);
+        }
+        .tour-hero-badge.highlight {
+            background: rgba(250, 200, 25, 0.12);
+            color: var(--primary-accent);
+            border-color: rgba(250, 200, 25, 0.35);
+        }
+
+        /* 360 Showcase Staging Box */
+        .showcase-stage-card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .showcase-stage-header {
+            padding: 18px 24px;
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .stage-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .stage-status-dot {
+            width: 10px;
+            height: 10px;
+            background: #00E676;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00E676;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+        .stage-title {
+            color: var(--text-white);
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            letter-spacing: 0.04em;
+        }
+        .stage-controls-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(250, 200, 25, 0.15);
+            color: var(--primary-accent);
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(250, 200, 25, 0.3);
+            font-family: var(--font-mono);
+        }
+
+        /* 360 Viewport Visual Simulation with Direct Image */
+        .stage-viewport-area {
+            position: relative;
+            height: 460px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #323232;
+        }
+        .stage-viewport-bg-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            filter: brightness(0.7) contrast(1.1);
+        }
+        .stage-viewport-area::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(50, 50, 50,0.2) 0%, rgba(50, 50, 50,0.85) 100%);
+            z-index: 1;
+        }
+        .stage-center-overlay {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 640px;
+            padding: 36px 30px;
+            background: rgba(42, 42, 44, 0.9);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+        }
+        .stage-360-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-accent);
+            color: #323232;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(250, 200, 25, 0.4);
+            font-family: var(--font-mono);
+        }
+        .stage-center-overlay h3 {
+            color: var(--text-white);
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-family: var(--font-display);
+            letter-spacing: 0.02em;
+        }
+        .stage-center-overlay p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        /* Hotspot simulated pins */
+        .hotspot-pin {
+            position: absolute;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(42, 42, 46, 0.95);
+            color: var(--text-white);
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.82rem;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+            border: 1.5px solid var(--primary-accent);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            animation: float-pin 3s ease-in-out infinite alternate;
+            font-family: var(--font-mono);
+        }
+        .hotspot-pin span {
+            color: var(--primary-accent);
+        }
+        .hotspot-pin:hover {
+            transform: scale(1.08);
+            background: var(--primary-accent);
+            color: #323232;
+        }
+        .hotspot-pin:hover span {
+            color: #323232;
+        }
+        @keyframes float-pin {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
+        }
+        .pin-1 { top: 22%; left: 12%; animation-delay: 0s; }
+        .pin-2 { top: 65%; left: 18%; animation-delay: 0.8s; }
+        .pin-3 { top: 25%; right: 14%; animation-delay: 1.5s; }
+        .pin-4 { bottom: 18%; right: 20%; animation-delay: 2.2s; }
+
+        /* Notice Banner */
+        .tour-notice-banner {
+            padding: 14px 24px;
+            background: rgba(250, 200, 25, 0.08);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+        .tour-notice-banner .notice-icon {
+            color: var(--primary-accent);
+            font-size: 1.1rem;
+            font-weight: 900;
+        }
+
+        /* Filter Tabs */
+        .tour-filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 36px;
+            justify-content: center;
+        }
+        .tour-filter-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-family: var(--font-mono);
+        }
+        .tour-filter-btn:hover {
+            border-color: var(--primary-accent);
+            color: var(--text-white);
+            transform: translateY(-2px);
+        }
+        .tour-filter-btn.active {
+            background: var(--primary-accent);
+            color: #323232;
+            border-color: var(--primary-accent);
+            box-shadow: 0 4px 14px rgba(250, 200, 25, 0.3);
+        }
+
+        /* Product Interactive Showcase Grid */
+        .tour-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        .tour-tile-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+        .tour-tile-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary-accent);
+            box-shadow: var(--shadow-xl);
+        }
+        .tour-tile-media {
+            position: relative;
+            height: 220px;
+            background: #111111;
+            overflow: hidden;
+        }
+        .tour-tile-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .tour-tile-card:hover .tour-tile-media img {
+            transform: scale(1.08);
+        }
+        .tour-tile-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(50, 50, 50, 0.88);
+            color: var(--primary-accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            backdrop-filter: blur(4px);
+            font-family: var(--font-mono);
+            border: 1px solid rgba(250, 200, 25, 0.3);
+        }
+        .tour-3d-indicator {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            background: var(--primary-accent);
+            color: #323232;
+            font-size: 0.74rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            font-family: var(--font-mono);
+        }
+        .tour-tile-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .tour-tile-body h3 {
+            font-size: 1.15rem;
+            color: var(--text-white);
+            margin-bottom: 10px;
+            line-height: 1.35;
+            font-family: var(--font-display);
+        }
+        .tour-tile-body p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 18px;
+            flex-grow: 1;
+        }
+        .tour-tile-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-accent);
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            transition: color var(--transition-fast);
+            font-family: var(--font-mono);
+        }
+        .tour-tile-card:hover .tour-tile-action {
+            color: var(--primary-bright);
+        }
+
+        /* 3 Core Value Pillars Section */
+        .tour-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 36px;
+        }
+        .tour-pillar-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .tour-pillar-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-accent);
+            box-shadow: var(--shadow-md);
+        }
+        .pillar-icon-box {
+            width: 48px;
+            height: 48px;
+            background: rgba(250, 200, 25, 0.12);
+            color: var(--primary-accent);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            border: 1px solid rgba(250, 200, 25, 0.25);
+        }
+        .tour-pillar-card h3 {
+            font-size: 1.15rem;
+            color: var(--text-white);
+            margin-bottom: 10px;
+            font-family: var(--font-display);
+        }
+        .tour-pillar-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Big CTA Banner Press Here */
+        .press-here-banner {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            padding: 44px 36px;
+            color: var(--text-white);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .press-here-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-accent);
+        }
+        .press-here-banner h2 {
+            color: var(--text-white);
+            font-size: 1.8rem;
+            margin-bottom: 14px;
+            font-family: var(--font-display);
+            letter-spacing: 0.02em;
+        }
+        .press-here-banner p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 720px;
+            margin: 0 auto 26px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 992px) {
+            .tour-showcase-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .tour-pillars-grid {
+                grid-template-columns: 1fr;
+            }
+            .stage-viewport-area {
+                height: 380px;
+            }
+            .hotspot-pin {
+                display: none;
+            }
+        }
+        @media (max-width: 640px) {
+            .tour-showcase-grid {
+                grid-template-columns: 1fr;
+            }
+            .stage-viewport-area {
+                height: 320px;
+            }
+            .stage-center-overlay {
+                padding: 20px 14px;
+            }
+            .stage-center-overlay h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style></head> <body> <div data-partial="header"></div> <main> <section class="page-hero"> <div class="wrap"> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="index.html">Home</a> <span class="separator">/</span> <span class="current">Virtual Showroom</span> </nav> <h1 class="h2 page-hero-title">MAO Virtual <span class="text-yellow">Showroom</span></h1> <p class="lead page-hero-subtitle">An innovative virtual showroom that allows you to explore our products and services anytime, anywhere. Experience 3D formwork assemblies and scaffolding models directly in your browser.</p> <div class="tour-hero-meta-bar"> <span class="tour-hero-badge highlight">INTERACTIVE DIGITAL SHOWROOM</span> <span class="tour-hero-badge">14+ FORMWORK &amp; SCAFFOLDING SYSTEMS</span> <span class="tour-hero-badge">DIRECT TECHNICAL SPECS &amp; BIM DATA</span> </div> </div> </section> <section class="section-pad"> <div class="wrap"> <div class="showcase-stage-card reveal"> <div class="showcase-stage-header"> <div class="stage-title-wrap"> <span class="stage-status-dot"></span> <span class="stage-title">INTERACTIVE 3D VIRTUAL SHOWROOM VIEWER</span> </div> <div class="stage-controls-badge"> <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> <span>360° PANORAMIC MODE</span> </div> </div> <div class="stage-viewport-area"> <img width="960" height="760" src="assets/img/hero1.webp" alt="Virtual 3D Tour Showcase" class="stage-viewport-bg-img" fetchpriority="high"> <div class="hotspot-pin pin-1" onclick="location.href='product-profex.html'"> <span>●</span> Profex Alignment Clamp </div> <div class="hotspot-pin pin-2" onclick="location.href='product-ringlock.html'"> <span>●</span> Ringlock 8-Hole Rosette </div> <div class="hotspot-pin pin-3" onclick="location.href='product-bridge-table.html'"> <span>●</span> Bridge Table Girder </div> <div class="hotspot-pin pin-4" onclick="location.href='product-european-props.html'"> <span>●</span> EN 1065 Prop Collar </div> <div class="stage-center-overlay"> <div class="stage-360-icon">360°</div> <h3>EXPLORE SYSTEM ASSEMBLIES IN FULL DIGITAL DETAIL</h3> <p>Interact with our complete range of certified Saudi-manufactured wall formworks, modular scaffolding towers, and civil engineering falsework. Click any product below to inspect load charts, connection details, and application galleries.</p> <a href="#product-gallery" class="btn btn-primary btn-sm">Explore Interactive Gallery &darr;</a> </div> </div> <div class="tour-notice-banner"> <span class="notice-icon">&#9432;</span> <span><strong>Interactive Showroom Tour:</strong> A full WebGL-rendered 360° VR immersion is currently under development. In this version, use our interactive product catalog grid below to inspect high-resolution systems and engineering profiles.</span> </div> </div> <div id="product-gallery" style="padding-top: 20px;"> <div class="section-header reveal"> <span class="kicker">INTERACTIVE PRODUCT LINEUP</span> <h2 class="h2">EXPLORE FORMWORK &amp; SCAFFOLDING SYSTEMS</h2> <p class="lead">Filter by engineering category or select any system tile to view detailed load ratings, assembly drawings, and project case studies.</p> </div> <div class="tour-filter-bar reveal"> <button type="button" class="tour-filter-btn active" data-filter="all">All Systems (14)</button> <button type="button" class="tour-filter-btn" data-filter="formwork">Wall &amp; Column Formwork</button> <button type="button" class="tour-filter-btn" data-filter="scaffolding">Scaffolding &amp; Shoring</button> <button type="button" class="tour-filter-btn" data-filter="heavy">Heavy Infrastructure</button> <button type="button" class="tour-filter-btn" data-filter="components">Components &amp; Insulation</button> </div> <div class="tour-showcase-grid"> <a href="product-profex.html" class="tour-tile-card reveal" data-category="formwork"> <div class="tour-tile-media"> <img width="681" height="634" loading="lazy" src="assets/img/profex.webp" alt="Profex Wall Formwork System"> <span class="tour-tile-badge">Wall Formwork</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Profex Wall System</h3> <p>Universal modular wall formwork with Finnish birch plywood and self-aligning lever clamps withstanding 60 kN/m² concrete pressure.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-variform.html" class="tour-tile-card reveal" data-category="formwork"> <div class="tour-tile-media"> <img width="630" height="988" loading="lazy" src="assets/img/variform.webp" alt="Variform Curved Wall Formwork"> <span class="tour-tile-badge">Curved Walls</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Variform Curved Wall</h3> <p>Continuous spindle-adjusted steel waler system for circular concrete tanks, silos, water treatment plants, and curved bridge piers.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-circular-column.html" class="tour-tile-card reveal" data-category="formwork"> <div class="tour-tile-media"> <img width="835" height="551" loading="lazy" src="assets/img/circular-column.webp" alt="Circular Steel Column Molds"> <span class="tour-tile-badge">Columns</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Circular Column Molds</h3> <p>Heavy-gauge structural steel half-shells for seamless, tie-rod-free fair-faced architectural concrete columns up to 100 kN/m².</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-profemax.html" class="tour-tile-card reveal" data-category="formwork"> <div class="tour-tile-media"> <img width="114" height="494" loading="lazy" src="assets/img/formwork.webp" alt="Profemax Heavy Duty Formwork"> <span class="tour-tile-badge">Heavy Formwork</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Profemax Heavy Duty</h3> <p>High-pressure steel panel system certified for 80 kN/m² fresh concrete pressure on massive civil foundations and tall retaining walls.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-single-sided.html" class="tour-tile-card reveal" data-category="formwork"> <div class="tour-tile-media"> <img width="1920" height="1246" loading="lazy" src="assets/img/supporting-frame.webp" alt="Single Sided Supporting Frame"> <span class="tour-tile-badge">Retaining Walls</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Single Sided Supporting Frame</h3> <p>Triangular structural backing trusses transferring up to 120 kN/m lateral pressure on zero-tie subterranean basement walls.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-climbing.html" class="tour-tile-card reveal" data-category="formwork"> <div class="tour-tile-media"> <img width="659" height="714" loading="lazy" src="assets/img/climbing.webp" alt="Hydraulic Climbing System"> <span class="tour-tile-badge">High-Rise Cores</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Hydraulic Climbing System</h3> <p>Crane-independent self-climbing formwork driven by 100 kN synchronous hydraulic cylinders for tall elevator cores and pylon towers.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-ringlock.html" class="tour-tile-card reveal" data-category="scaffolding"> <div class="tour-tile-media"> <img width="1920" height="1440" loading="lazy" src="assets/img/scaffolding.webp" alt="Ringlock Modular Scaffolding"> <span class="tour-tile-badge">Modular Scaffolding</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Ringlock Modular System</h3> <p>Multi-directional 8-hole rosette joints supporting up to 45 kN leg loads for complex geometric facades, shoring, and public access.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-cuplock.html" class="tour-tile-card reveal" data-category="scaffolding"> <div class="tour-tile-media"> <img width="778" height="1192" loading="lazy" src="assets/img/wedge-lock-scaffolding-e1758388368606.webp" alt="Cuplock System Scaffolding"> <span class="tour-tile-badge">Shoring &amp; Access</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Cuplock System Scaffolding</h3> <p>Proven 4-ledger node locking cup for heavy slab falsework, external birdcage access, and industrial petrochemical maintenance.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-shorbrace.html" class="tour-tile-card reveal" data-category="scaffolding"> <div class="tour-tile-media"> <img width="1920" height="1373" loading="lazy" src="assets/img/shorbrace.webp" alt="Shorbrace Falsework Towers"> <span class="tour-tile-badge">Heavy Shoring</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Shorbrace Falsework Towers</h3> <p>Heavy-duty structural tubular towers capable of supporting up to 100 kN per vertical leg on high-span bridge viaducts and transfer slabs.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-manar-table.html" class="tour-tile-card reveal" data-category="scaffolding"> <div class="tour-tile-media"> <img width="960" height="760" loading="lazy" src="assets/img/hero1.webp" alt="Manar Slab Table System"> <span class="tour-tile-badge">Slab Formwork</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Manar Slab Table System</h3> <p>Pre-assembled modular table forms with folding legs and crane shifting forks for rapid 4-day floor cycling on commercial buildings.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-bridge-table.html" class="tour-tile-card reveal" data-category="heavy"> <div class="tour-tile-media"> <img width="1920" height="958" loading="lazy" src="assets/img/bridge-table.webp" alt="Bridge Table System"> <span class="tour-tile-badge">Civil Infrastructure</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Bridge Table System</h3> <p>Heavy structural steel primary girders with hydraulic wheel sets for rapid repositioning on multi-span expressway and rail viaducts.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-tunnel-construction.html" class="tour-tile-card reveal" data-category="heavy"> <div class="tour-tile-media"> <img width="1920" height="640" loading="lazy" src="assets/img/hero2.webp" alt="Tunnel Construction Carriage"> <span class="tour-tile-badge">Tunneling</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Tunnel Construction Carriage</h3> <p>Motorized rail-mounted arch traveler for mechanized continuous concrete vault casting in highway, railway, and utility tunnels.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-european-props.html" class="tour-tile-card reveal" data-category="components"> <div class="tour-tile-media"> <img width="1920" height="1536" loading="lazy" src="assets/img/european-props.webp" alt="European Telescopic Steel Props"> <span class="tour-tile-badge">System Components</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>European Steel Props</h3> <p>EN 1065 Class D &amp; E certified telescopic props with hot-dip galvanized finish, forged adjustment collar, and anti-crush safety stop.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> <a href="product-insulation.html" class="tour-tile-card reveal" data-category="components"> <div class="tour-tile-media"> <img width="536" height="983" loading="lazy" src="assets/img/insulation.webp" alt="Thermal & Acoustic Insulation"> <span class="tour-tile-badge">Insulation Systems</span> <span class="tour-3d-indicator"> <svg width="12" height="12" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3D Model </span> </div> <div class="tour-tile-body"> <h3>Thermal &amp; Acoustic Insulation</h3> <p>Rigid polyurethane (PUR/PIR) foam spray systems and thermal barrier panels engineered for sustainable building efficiency.</p> <span class="tour-tile-action">Inspect System Specs &rarr;</span> </div> </a> </div> </div> <div class="section-header reveal" style="margin-top: 40px;"> <span class="kicker">WHY CHOOSE MAO</span> <h2 class="h2">COMPREHENSIVE FORMWORK &amp; SCAFFOLDING SOLUTIONS</h2> <p class="lead">Over 50 years of manufacturing precision and engineering excellence across Saudi Arabia and the Middle East.</p> </div> <div class="tour-pillars-grid"> <div class="tour-pillar-card reveal"> <div class="pillar-icon-box"> <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> </div> <h3>Pioneering Since 1974</h3> <p>Salem Bin Hindi Al Harbi Establishment introduced systematic formwork and scaffolding rental to the Kingdom. Today we operate 20+ branches with massive rental inventory across 6 countries.</p> </div> <div class="tour-pillar-card reveal"> <div class="pillar-icon-box"> <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> </div> <h3>Certified 3D BIM Engineering</h3> <p>Certified static analysis, detailed Revit/Tekla shop drawings, and 3D clash prevention on every project to guarantee structural safety, cycle speed, and zero downtime.</p> </div> <div class="tour-pillar-card reveal"> <div class="pillar-icon-box"> <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> </div> <h3>Full Site Inspection &amp; Support</h3> <p>Dedicated field engineers conduct pre-pour structural inspections, load checks, and certified erector safety training on jobsites throughout the GCC and MENA region.</p> </div> </div> <div class="press-here-banner reveal" style="background: linear-gradient(135deg, rgba(250,200,25,0.15) 0%, rgba(42,42,46,0.95) 100%); border-color: var(--primary-accent); margin-bottom: 40px;"> <span class="kicker" style="background: var(--primary-accent); color: #000; font-weight: 800;">LIVE 360° EXPERIENCE</span> <h2 style="margin-top: 12px;">LAUNCH THE OFFICIAL 3D VIRTUAL SHOWROOM TOUR</h2> <p>Walk through our physical exhibition showroom in full 360-degree high-definition panorama. Inspect scale models, formwork mockups, and scaffolding assemblies with real-time navigation.</p> <a href="contact-us.html" class="e-btn-solid btn-lg" style="font-weight: 900; font-size: 1.1rem; padding: 18px 40px; box-shadow: 0 0 25px rgba(250, 200, 25, 0.4);">🚀 Request 3D BIM Engineering Model &rarr;</a> </div> <div class="press-here-banner reveal"> <h2>EXPLORE COMPLETE TECHNICAL CATALOG &amp; SPECIFICATIONS</h2> <p>Access our comprehensive product line, load capacity tables, permissible concrete pressure ratings, and system components in our full product center.</p> <a href="our-products.html" class="e-btn-solid btn-lg" style="font-weight: 800; font-size: 1.05rem; padding: 16px 36px;">Press Here to Explore All Products &rarr;</a> </div> </div> </section> <section class="section-pad"> <div class="wrap"> <div class="cta-box reveal"> <div class="cta-content"> <div class="cta-text-side"> <h2 class="cta-title">READY TO INTEGRATE MAO FORMWORK INTO YOUR NEXT PROJECT?</h2> <p class="cta-desc">Contact our engineering consultation desk for custom 3D formwork layouts, static calculation reports, and competitive rental quotations.</p> </div> <div class="cta-banner-actions"> <a href="contact-us.html" class="e-btn-solid btn-lg">Request Project Consultation &rarr;</a> <a href="tel:+966504518066" class="e-btn-ghost btn-lg"> <svg width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> Call +966 50 451 8066 </a> </div> </div> </div> </div> </section> </main> <div data-partial="footer"></div> <script src="js/partials.js"></script> <script src="js/main.js"></script> <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.tour-filter-btn');
+            const tiles = document.querySelectorAll('.tour-tile-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    tiles.forEach(tile => {
+                        if (filterValue === 'all' || tile.getAttribute('data-category') === filterValue) {
+                            tile.style.display = 'flex';
+                        } else {
+                            tile.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script> </body> </html> 

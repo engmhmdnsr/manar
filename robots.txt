@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /2025/
+Disallow: /2026/
+Disallow: /cdn-cgi/
+
+Sitemap: https://manar.com.sa/sitemap.xml
